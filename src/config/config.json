@@ -19,8 +19,8 @@
 
   "nav_button": {
     "enable": true,
-    "label": "Sign In",
-    "link": "/sign-in"
+    "label": "Log In",
+    "link": "/dashboard"
   },
 
   "params": {

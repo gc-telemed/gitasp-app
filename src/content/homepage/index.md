@@ -4,7 +4,7 @@ banner:
   content: Welcome to a new online home for your healthy body and mind!
   image: /images/banner-gapl.png
   button:
-    label: "Contact Us"
+    label: "Create Account"
     link: "/contact"
     enable: true
 

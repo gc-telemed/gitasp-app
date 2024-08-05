@@ -4,6 +4,8 @@
 
 Table User {
   id String [pk]
+  username String [not null]
+  password String [not null]
   sessions Session [not null]
 }
 

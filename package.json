@@ -4,6 +4,7 @@
   "description": "astro personal blog theme",
   "author": "Risav Karna",
   "private": true,
+
   "scripts": {
     "dev": "pnpm astro dev",
     "build": "pnpm astro build",
@@ -16,12 +17,17 @@
     "@astrojs/react": "^3.6.1",
     "@astrojs/rss": "^4.0.7",
     "@astrojs/sitemap": "^3.1.6",
+    "@astrojs/svelte": "^5.7.0",
     "@astrojs/tailwind": "^5.1.0",
     "@lucia-auth/adapter-prisma": "^4.0.1",
+    "@node-rs/argon2": "^1.8.3",
     "@prisma/client": "5.17.0",
     "astro": "^4.13.1",
     "astro-auto-import": "^0.4.2",
     "astro-font": "^0.0.77",
+    "bits-ui": "^0.21.13",
+    "clsx": "^2.1.1",
+    "formsnap": "^1.0.1",
     "fuse.js": "^7.0.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
@@ -34,7 +40,13 @@
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",
     "sharp": "0.33.1",
-    "swiper": "^11.0.5"
+    "svelte": "^4.2.18",
+    "sveltekit-superforms": "^2.16.1",
+    "swiper": "^11.0.5",
+    "tailwind-merge": "^2.4.0",
+    "tailwind-variants": "^0.2.1",
+    "typescript": "^5.5.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
@@ -49,6 +61,7 @@
     "prisma-dbml-generator": "^0.12.0",
     "prisma-docs-generator": "^0.8.0",
     "sass": "^1.70.0",
+    "shadcn-svelte": "^0.12.1",
     "tailwind-bootstrap-grid": "^5.1.0",
     "tailwindcss": "^3.4.1"
   }
