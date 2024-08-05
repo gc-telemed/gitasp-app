@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x", "debian-openssl-3.0.x"]
 }
 
@@ -15,7 +15,7 @@ generator dbml {
 
 generator docs {
   provider = "node node_modules/prisma-docs-generator"
-  output = "../../docs/db"
+  output   = "../../docs/db"
 }
 
 datasource db {
@@ -23,13 +23,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sessions Session[]
+}
+
+model Session {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  expiresAt DateTime
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
 model Appointment {
-  id                String          @id @default(cuid())
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid              String          @unique
-  appointmentTypeId String
-  patientId         String
-  locationId        String
-  providerId        String
+  appointmentTypeId String          @db.Uuid
+  patientId         String          @db.Uuid
+  locationId        String          @db.Uuid
+  providerId        String          @db.Uuid
   startDatetime     DateTime
   endDatetime       DateTime
   voided            Boolean         @default(false)
@@ -50,7 +63,7 @@ model Appointment {
 }
 
 model AppointmentType {
-  id              String        @id @default(cuid())
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
   name            String
   description     String
@@ -65,7 +78,7 @@ model AppointmentType {
 }
 
 model Location {
-  id              String        @id @default(cuid())
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
   name            String
   description     String
@@ -88,7 +101,7 @@ model Location {
 }
 
 model Patient {
-  id              String        @id @default(cuid())
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
   givenName       String
   middleName      String
@@ -109,7 +122,7 @@ model Patient {
 }
 
 model Provider {
-  id              String        @id @default(cuid())
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
   name            String
   identifier      String
@@ -129,7 +142,7 @@ model Provider {
 }
 
 model Form {
-  id                 String           @id @default(cuid())
+  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid               String           @unique
   name               String
   description        String
@@ -142,9 +155,9 @@ model Form {
   dateCreated        DateTime
   lastChangedBy      String
   lastChangedDate    DateTime
-  fieldId            String?
+  fieldId            String?          @db.Uuid
   encounterList      Encounter[]
-  dield              Field?           @relation(fields: [fieldId], references: [id])
+  field              Field?           @relation(fields: [fieldId], references: [id])
   formEncounterList  FormEncounter[]
   formResourceList   FormResource[]
   formSubmissionList FormSubmission[]
@@ -153,10 +166,10 @@ model Form {
 }
 
 model FormEncounter {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
-  formId          String
-  encounterId     String
+  formId          String    @db.Uuid
+  encounterId     String    @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -168,10 +181,10 @@ model FormEncounter {
 }
 
 model FormResource {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  formId          String
-  resourceId      String
+  formId          String    @db.Uuid
+  resourceId      String    @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -183,10 +196,10 @@ model FormResource {
 }
 
 model FormSubmission {
-  id              String        @id @default(cuid())
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
-  formId          String
-  encounterId     String
+  formId          String      @db.Uuid
+  encounterId     String      @db.Uuid
   submissionDate  DateTime
   creator         String
   dateCreated     DateTime
@@ -200,12 +213,12 @@ model FormSubmission {
 }
 
 model Field {
-  id              String        @id @default(cuid())
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
   name            String
   description     String
   fieldType       String
-  conceptId       String
+  conceptId       String      @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -219,10 +232,10 @@ model Field {
 }
 
 model FieldAnswer {
-  id               String         @id @default(cuid())
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid             String         @unique
-  formSubmissionId String
-  fieldId          String
+  formSubmissionId String     @db.Uuid
+  fieldId          String     @db.Uuid
   value            String
   creator          String
   dateCreated      DateTime
@@ -235,9 +248,9 @@ model FieldAnswer {
 }
 
 model FieldOption {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  fieldId         String
+  fieldId         String    @db.Uuid
   name            String
   description     String
   creator         String
@@ -250,13 +263,13 @@ model FieldOption {
 }
 
 model Encounter {
-  id                 String           @id @default(cuid())
+  id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid               String           @unique
-  encounterTypeId    String
-  patientId          String
-  locationId         String
-  formId             String
-  providerId         String
+  encounterTypeId    String     @db.Uuid
+  patientId          String     @db.Uuid
+  locationId         String     @db.Uuid
+  formId             String     @db.Uuid
+  providerId         String     @db.Uuid
   startDatetime      DateTime
   endDatetime        DateTime
   voided             Boolean          @default(false)
@@ -281,7 +294,7 @@ model Encounter {
 }
 
 model EncounterType {
-  id              String      @id @default(cuid())
+  id              String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String      @unique
   name            String
   description     String
@@ -295,10 +308,10 @@ model EncounterType {
 }
 
 model Obs {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
-  conceptId       String
-  encounterId     String
+  conceptId       String    @db.Uuid
+  encounterId     String    @db.Uuid
   obsDatetime     DateTime
   valueDatetime   DateTime
   valueNumeric    Float
@@ -314,10 +327,10 @@ model Obs {
 }
 
 model Order {
-  id               String          @id @default(cuid())
+  id               String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid             String          @unique
-  conceptId        String
-  encounterId      String
+  conceptId        String           @db.Uuid
+  encounterId      String           @db.Uuid
   orderDatetime    DateTime
   instructions     String
   dosage           String
@@ -331,10 +344,10 @@ model Order {
   dateCreated      DateTime
   lastChangedBy    String
   lastChangedDate  DateTime
-  orderFrequencyId String?
-  orderRouteId     String?
-  orderTypeId      String?
-  orderUnitId      String?
+  orderFrequencyId String?      @db.Uuid
+  orderRouteId     String?      @db.Uuid
+  orderTypeId      String?      @db.Uuid
+  orderUnitId      String?      @db.Uuid
   concept          Concept         @relation(fields: [conceptId], references: [id])
   encounter        Encounter       @relation(fields: [encounterId], references: [id])
   OrderFrequency   OrderFrequency? @relation(fields: [orderFrequencyId], references: [id])
@@ -346,7 +359,7 @@ model Order {
 }
 
 model OrderFrequency {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
   name            String
   description     String
@@ -360,7 +373,7 @@ model OrderFrequency {
 }
 
 model OrderRoute {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
   name            String
   description     String
@@ -374,7 +387,7 @@ model OrderRoute {
 }
 
 model OrderType {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
   name            String
   description     String
@@ -388,7 +401,7 @@ model OrderType {
 }
 
 model OrderUnit {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
   name            String
   description     String
@@ -402,7 +415,7 @@ model OrderUnit {
 }
 
 model Concept {
-  id                  String            @id @default(cuid())
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid                String            @unique
   name                String
   description         String
@@ -416,11 +429,11 @@ model Concept {
   dateCreated         DateTime
   lastChangedBy       String
   lastChangedDate     DateTime
-  conceptClassId      String?
-  conceptDatatypeId   String?
-  conceptMapId        String?
-  conceptSetId        String?
-  conceptSourceId     String?
+  conceptClassId      String?   @db.Uuid
+  conceptDatatypeId   String?   @db.Uuid
+  conceptMapId        String?   @db.Uuid
+  conceptSetId        String?   @db.Uuid
+  conceptSourceId     String?   @db.Uuid
   ConceptClass        ConceptClass?     @relation(fields: [conceptClassId], references: [id])
   ConceptDatatype     ConceptDatatype?  @relation(fields: [conceptDatatypeId], references: [id])
   conceptMap          ConceptMap?       @relation(fields: [conceptMapId], references: [id])
@@ -440,10 +453,10 @@ model Concept {
 }
 
 model ConceptAnswer {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String
-  answerConceptId String
+  conceptId       String    @db.Uuid
+  answerConceptId String    @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -455,7 +468,7 @@ model ConceptAnswer {
 }
 
 model ConceptClass {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
   name            String
   description     String
@@ -469,7 +482,7 @@ model ConceptClass {
 }
 
 model ConceptDatatype {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
   name            String
   description     String
@@ -483,7 +496,7 @@ model ConceptDatatype {
 }
 
 model ConceptMap {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
   name            String
   description     String
@@ -497,9 +510,9 @@ model ConceptMap {
 }
 
 model ConceptName {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String
+  conceptId       String    @db.Uuid
   name            String
   locale          String
   creator         String
@@ -512,9 +525,9 @@ model ConceptName {
 }
 
 model ConceptNumeric {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String
+  conceptId       String    @db.Uuid
   hiAbsolute      Float
   hiCritical      Float
   hiNormal        Float
@@ -532,9 +545,9 @@ model ConceptNumeric {
 }
 
 model ConceptProposal {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String
+  conceptId       String    @db.Uuid
   name            String
   description     String
   creator         String
@@ -547,7 +560,7 @@ model ConceptProposal {
 }
 
 model ConceptSet {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
   name            String
   description     String
@@ -561,7 +574,7 @@ model ConceptSet {
 }
 
 model ConceptSource {
-  id              String    @id @default(cuid())
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String    @unique
   name            String
   description     String
@@ -575,9 +588,9 @@ model ConceptSource {
 }
 
 model ConceptWord {
-  id              String   @id @default(cuid())
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String
+  conceptId       String    @db.Uuid
   word            String
   locale          String
   creator         String
@@ -590,7 +603,7 @@ model ConceptWord {
 }
 
 model Resource {
-  id               String         @id @default(cuid())
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid             String         @unique
   name             String
   description      String
@@ -604,12 +617,12 @@ model Resource {
 }
 
 model BlogPost {
-  id                     String               @id @default(cuid())
+  id                     String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title                  String
   content                String
   context                Json
-  authorId               String
-  spaceTimeCoordinatesId String               @unique
+  authorId               String     @db.Uuid
+  spaceTimeCoordinatesId String     @db.Uuid          @unique
   author                 BlogPostAuthor       @relation(fields: [authorId], references: [id])
   spaceTimeCoordinates   SpaceTimeCoordinates @relation(fields: [spaceTimeCoordinatesId], references: [id])
   tagArrowList           BlogPostTagArrow[]
@@ -618,7 +631,7 @@ model BlogPost {
 }
 
 model BlogPostTag {
-  id            String             @id @default(cuid())
+  id            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name          String
   descriptor    String?
   postArrowList BlogPostTagArrow[]
@@ -627,9 +640,9 @@ model BlogPostTag {
 }
 
 model BlogPostTagArrow {
-  id     String      @id @default(cuid())
-  postId String
-  tagId  String
+  id     String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  postId String     @db.Uuid
+  tagId  String     @db.Uuid
   post   BlogPost    @relation(fields: [postId], references: [id])
   tag    BlogPostTag @relation(fields: [tagId], references: [id])
 
@@ -638,7 +651,7 @@ model BlogPostTagArrow {
 }
 
 model BlogPostAuthor {
-  id           String     @id @default(cuid())
+  id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String
   blogPostList BlogPost[]
 
@@ -646,7 +659,7 @@ model BlogPostAuthor {
 }
 
 model SpaceTimeCoordinates {
-  id         String    @id @default(cuid())
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   latitude   Float
   longitude  Float
   startTime  Float
@@ -660,8 +673,8 @@ model SpaceTimeCoordinates {
 }
 
 model BudgetEntry {
-  id            String   @id @default(cuid())
-  serviceId     String
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serviceId     String  @db.Uuid
   cost          Float
   discount      Float
   promotion     Float
@@ -669,13 +682,13 @@ model BudgetEntry {
   percentChange Float
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  budgetId      String
+  budgetId      String   @db.Uuid
   budget        Budget   @relation(fields: [budgetId], references: [id])
   service       Service  @relation(fields: [serviceId], references: [id])
 }
 
 model Service {
-  id          String        @id @default(cuid())
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   description String
   category    String
   metadata    Json
@@ -685,19 +698,19 @@ model Service {
 }
 
 model Budget {
-  id         String          @id @default(cuid())
+  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
   fiscalYear Int
-  reportId   String?
+  reportId   String?        @db.Uuid
   userList   BudgetBudUser[]
   entryList  BudgetEntry[]
   report     Report?
 }
 
 model Report {
-  id             String   @id @default(cuid())
-  budgetId       String   @unique
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  budgetId       String   @unique @db.Uuid
   totalCost      Float
   totalDiscount  Float
   totalPromotion Float
@@ -708,7 +721,7 @@ model Report {
 }
 
 model BudUser {
-  id         String          @id @default(cuid())
+  id         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name       String
   email      String          @unique
   password   String
@@ -721,25 +734,26 @@ model BudUser {
 }
 
 model BudgetBudUser {
-  userId   String
-  budgetId String
+  id String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId   String   @db.Uuid
+  budgetId String   @db.Uuid
   role     String
   ability  String
   category String
   budget   Budget  @relation(fields: [budgetId], references: [id])
   user     BudUser @relation(fields: [userId], references: [id])
 
-  @@id([userId, budgetId])
+  @@unique([userId, budgetId])
   @@map("BudgetBudgetUser")
 }
 
 model BudEvent {
-  id           String   @id @default(cuid())
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   type         String
   description  String
   categoryList String[]
   metadata     Json
-  budUserId    String
+  budUserId    String   @db.Uuid
   createdAt    DateTime @default(now())
   budUser      BudUser  @relation(fields: [budUserId], references: [id])
 }

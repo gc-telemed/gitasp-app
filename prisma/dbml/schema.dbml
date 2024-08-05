@@ -2,6 +2,18 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
+Table User {
+  id String [pk]
+  sessions Session [not null]
+}
+
+Table Session {
+  id String [pk]
+  userId String [not null]
+  expiresAt DateTime [not null]
+  user User [not null]
+}
+
 Table appointment {
   id String [pk]
   uuid String [unique, not null]
@@ -116,7 +128,7 @@ Table form {
   lastChangedDate DateTime [not null]
   fieldId String
   encounterList encounter [not null]
-  dield field
+  field field
   formEncounterList form_encounter [not null]
   formResourceList form_resource [not null]
   formSubmissionList form_submission [not null]
@@ -630,6 +642,7 @@ Table BudgetUser {
 }
 
 Table BudgetBudgetUser {
+  id String [pk]
   userId String [not null]
   budgetId String [not null]
   role String [not null]
@@ -639,7 +652,7 @@ Table BudgetBudgetUser {
   user BudgetUser [not null]
 
   indexes {
-    (userId, budgetId) [pk]
+    (userId, budgetId) [unique]
   }
 }
 
@@ -653,6 +666,8 @@ Table BudEvent {
   createdAt DateTime [default: `now()`, not null]
   budUser BudgetUser [not null]
 }
+
+Ref: Session.userId > User.id [delete: Cascade]
 
 Ref: appointment.appointmentTypeId > appointment_type.id
 
