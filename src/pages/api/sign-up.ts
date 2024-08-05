@@ -1,5 +1,5 @@
 // pages/api/signup.ts
-import { lucia } from "$lib/db/auth";
+import { client, lucia } from "$lib/db/auth";
 import { hash } from "@node-rs/argon2";
 import { generateIdFromEntropySize } from "lucia";
 
@@ -36,16 +36,32 @@ export async function POST(context: APIContext): Promise<Response> {
 		parallelism: 1
 	});
 
-	// TODO: check if username is already used
-	// await db.table("user").insert({
-	// 	id: userId,
-	// 	username: username,
-	// 	password_hash: passwordHash
-	// });
+  const foundUser = await client.user.findUnique({
+    where: {
+      username
+    },
+    select: {
+      username: true
+    }
+  });
+
+  if (foundUser) {
+    return new Response("User already exists", {
+      status: 400
+    });
+  } else {
+    await client.user.create({
+      data: {
+        id: userId,
+        username,
+        password: passwordHash
+      }
+    });
+  }
 
 	const session = await lucia.createSession(userId, {});
 	const sessionCookie = lucia.createSessionCookie(session.id);
 	context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-	return context.redirect("/");
+	return context.redirect("/cliniq");
 }

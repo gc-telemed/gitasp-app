@@ -1,10 +1,10 @@
 ---
 banner:
-  title: Gita's Patient App & Health Services
+  title: Gita S Patient App & Health Services
   content: Welcome to a new online home for your healthy body and mind!
   image: /images/banner-gapl.png
   button:
-    label: "Install Gita SP App"
+    label: "Install Gita S P App"
     link: "/install"
     enable: true
 
