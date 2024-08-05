@@ -1,14 +1,14 @@
 {
   "site": {
-    "title": "Bigspring Light Astro",
-    "base_url": "https://bigspring-light-astro.vercel.app",
+    "title": "Gita's Patient App",
+    "base_url": "https://gitasp.app",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
     "logo": "/images/logo.png",
     "logo_width": "200",
-    "logo_height": "38",
-    "logo_text": "Astroplate"
+    "logo_height": "69",
+    "logo_text": "GAPL Logo"
   },
 
   "settings": {
@@ -19,20 +19,20 @@
 
   "nav_button": {
     "enable": true,
-    "label": "Get Started",
-    "link": "/contact"
+    "label": "Sign In",
+    "link": "/sign-in"
   },
 
   "params": {
     "contact_form_action": "",
     "tag_manager_id": "",
     "footer_content": "Lorem ipsum dolor sit amet, consectetur elit. Consjat tristique eget amet, tempus eu at cttur.",
-    "copyright": "Designed and Developed By [Themefisher](https://themefisher.com/)"
+    "copyright": "GAPL Pvt Ltd | 2024"
   },
 
   "metadata": {
-    "meta_author": "Themefisher",
+    "meta_author": "Risav Karna",
     "meta_image": "/images/og-image.png",
-    "meta_description": "astro boilerplate"
+    "meta_description": "astro cliniq"
   }
 }

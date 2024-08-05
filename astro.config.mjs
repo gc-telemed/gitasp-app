@@ -16,6 +16,9 @@ export default defineConfig({
   image: {
     service: squooshImageService(),
   },
+  security: {
+    checkOrigin: true
+  },
   integrations: [
     react(),
     sitemap(),

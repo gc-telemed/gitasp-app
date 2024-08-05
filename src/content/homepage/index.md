@@ -1,8 +1,8 @@
 ---
 banner:
-  title: Let us solve your critical website development challenges
-  content: Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam nihil enim maxime corporis cumque <br/> totam aliquid nam sint inventore optio modi neque laborum officiis necessitatibus
-  image: /images/banner-art.png
+  title: Gita's Patient App & Health Services
+  content: Welcome to a new online home for your healthy body and mind!
+  image: /images/banner-gapl.png
   button:
     label: "Contact Us"
     link: "/contact"
@@ -10,7 +10,7 @@ banner:
 
 # feature
 feature: 
-  title: Something You Need To Know
+  title: Create a free account to access our premium services
   features:
   - name: "Clean Code"
     icon: "/images/code.svg"
