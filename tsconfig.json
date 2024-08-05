@@ -17,6 +17,7 @@
       "@/helpers/*": ["./src/layouts/helpers/*"],
       "@/partials/*": ["./src/layouts/partials/*"],
       "@/*": ["./src/*"],
+      "$lib/*": ["./src/lib/*"],
     },
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],

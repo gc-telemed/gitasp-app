@@ -4,8 +4,8 @@ banner:
   content: Welcome to a new online home for your healthy body and mind!
   image: /images/banner-gapl.png
   button:
-    label: "Create Account"
-    link: "/contact"
+    label: "Install Gita SP App"
+    link: "/install"
     enable: true
 
 # feature

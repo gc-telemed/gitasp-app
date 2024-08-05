@@ -24,7 +24,10 @@ if (theme.fonts.font_family.secondary) {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
+  content: [
+    "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
+    "node_modules/preline/preline.js"
+  ],
   safelist: [{ pattern: /^swiper-/ }],
   darkMode: "class",
   theme: {
@@ -71,6 +74,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
+    require('preline/plugin'),
     require("tailwind-bootstrap-grid")({ generateContainer: false }),
   ],
 };
