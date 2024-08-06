@@ -33,7 +33,7 @@ feature:
 
 # services
 services:
-  - title: "It is the most advanced digital marketing and it company."
+  - title: "It is the most advanced digital marketing and IT company."
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur. Leo facilisi nunc viverra tellus. Ac laoreet sit vel consquat. consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur. Leo facilisi nunc viverra tellus. Ac laoreet sit vel consquat."
     images:
       - "/images/service-slide-1.png"
@@ -77,14 +77,14 @@ services:
 
 # workflow
 workflow: 
-  title: "The B.O.S.S Workflow"
+  title: "The B.O.S.S Workflows"
   image: "/images/banner.png"
-  description: ""
+  description: "Business Process Optimization for Surgical and Medical Workflows"
 
 # call_to_action
 call_to_action:
   title: Ready to start?
-  content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  content: If you have questions, let's find the answers together.
   image: '/images/cta.png'
   button:
     enable: true

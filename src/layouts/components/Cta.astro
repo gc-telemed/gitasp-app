@@ -6,23 +6,24 @@ const { cta } = Astro.props;
 ---
 
 <section class="section items-center justify-center">
-    <div class="row items-center justify-center">
-      <div class="md:col-5 lg:col-4">
-        <Image
-          class="w-full"
-          src={cta?.image}
-          alt="call to action image"
-          width={325}
-          height={206}
-        />
-      </div>
-      <div class="text-center md:mt-0 md:text-left md:col-6 lg:col-5">
-        <h2>{cta?.title}</h2>
+  <div class="items-center justify-center">
+    <div class="md:col-12 lg:col-6">
+      <Image
+        class="w-full"
+        src={cta?.image}
+        alt="call to action image"
+        width={625}
+        height={412}
+      />
+    </div>
+    <div class="text-center md:mt-0 md:col-6 lg:col-6">
+      <h2>{cta?.title}</h2>
+      <div class="flex flex-col">
         <p class="mt-6" set:html={markdownify(cta?.content)} />
         {
           cta.button.enable && (
             <a
-              class="btn btn-primary mt-4"
+              class="btn btn-primary rounded-md mt-4 text-center"
               href={cta.button.link}
               rel={cta.button.rel}
             >
@@ -31,6 +32,6 @@ const { cta } = Astro.props;
           )
         }
       </div>
-
     </div>
+  </div>
 </section>
