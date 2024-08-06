@@ -5,8 +5,8 @@
 Table users {
   id String [pk]
   username String [unique, not null]
-  password String [not null]
   name String
+  password String
   email String [unique]
   emailVerified DateTime
   image String

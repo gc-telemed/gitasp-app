@@ -1,11 +1,77 @@
 -- CreateTable
+CREATE TABLE "users" (
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "username" TEXT NOT NULL,
+    "name" TEXT,
+    "password" TEXT,
+    "email" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "image" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "accounts" (
+    "userId" UUID NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "accounts_pkey" PRIMARY KEY ("provider","providerAccountId")
+);
+
+-- CreateTable
+CREATE TABLE "sessions" (
+    "sessionToken" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "verificationtokens" (
+    "identifier" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "verificationtokens_pkey" PRIMARY KEY ("identifier","token")
+);
+
+-- CreateTable
+CREATE TABLE "authenticator" (
+    "credentialID" TEXT NOT NULL,
+    "userId" UUID NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "credentialPublicKey" TEXT NOT NULL,
+    "counter" INTEGER NOT NULL,
+    "credentialDeviceType" TEXT NOT NULL,
+    "credentialBackedUp" BOOLEAN NOT NULL,
+    "transports" TEXT,
+
+    CONSTRAINT "authenticator_pkey" PRIMARY KEY ("userId","credentialID")
+);
+
+-- CreateTable
 CREATE TABLE "appointment" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "appointmentTypeId" TEXT NOT NULL,
-    "patientId" TEXT NOT NULL,
-    "locationId" TEXT NOT NULL,
-    "providerId" TEXT NOT NULL,
+    "appointmentTypeId" UUID NOT NULL,
+    "patientId" UUID NOT NULL,
+    "locationId" UUID NOT NULL,
+    "providerId" UUID NOT NULL,
     "startDatetime" TIMESTAMP(3) NOT NULL,
     "endDatetime" TIMESTAMP(3) NOT NULL,
     "voided" BOOLEAN NOT NULL DEFAULT false,
@@ -22,7 +88,7 @@ CREATE TABLE "appointment" (
 
 -- CreateTable
 CREATE TABLE "appointment_type" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -37,7 +103,7 @@ CREATE TABLE "appointment_type" (
 
 -- CreateTable
 CREATE TABLE "location" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -59,7 +125,7 @@ CREATE TABLE "location" (
 
 -- CreateTable
 CREATE TABLE "patient" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "givenName" TEXT NOT NULL,
     "middleName" TEXT NOT NULL,
@@ -79,7 +145,7 @@ CREATE TABLE "patient" (
 
 -- CreateTable
 CREATE TABLE "provider" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "identifier" TEXT NOT NULL,
@@ -98,7 +164,7 @@ CREATE TABLE "provider" (
 
 -- CreateTable
 CREATE TABLE "form" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -111,17 +177,17 @@ CREATE TABLE "form" (
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
     "lastChangedDate" TIMESTAMP(3) NOT NULL,
-    "fieldId" TEXT,
+    "fieldId" UUID,
 
     CONSTRAINT "form_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "form_encounter" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "formId" TEXT NOT NULL,
-    "encounterId" TEXT NOT NULL,
+    "formId" UUID NOT NULL,
+    "encounterId" UUID NOT NULL,
     "creator" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
@@ -132,10 +198,10 @@ CREATE TABLE "form_encounter" (
 
 -- CreateTable
 CREATE TABLE "form_resource" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "formId" TEXT NOT NULL,
-    "resourceId" TEXT NOT NULL,
+    "formId" UUID NOT NULL,
+    "resourceId" UUID NOT NULL,
     "creator" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
@@ -146,10 +212,10 @@ CREATE TABLE "form_resource" (
 
 -- CreateTable
 CREATE TABLE "form_submission" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "formId" TEXT NOT NULL,
-    "encounterId" TEXT NOT NULL,
+    "formId" UUID NOT NULL,
+    "encounterId" UUID NOT NULL,
     "submissionDate" TIMESTAMP(3) NOT NULL,
     "creator" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
@@ -161,12 +227,12 @@ CREATE TABLE "form_submission" (
 
 -- CreateTable
 CREATE TABLE "field" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "fieldType" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
     "creator" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
@@ -177,10 +243,10 @@ CREATE TABLE "field" (
 
 -- CreateTable
 CREATE TABLE "field_answer" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "formSubmissionId" TEXT NOT NULL,
-    "fieldId" TEXT NOT NULL,
+    "formSubmissionId" UUID NOT NULL,
+    "fieldId" UUID NOT NULL,
     "value" TEXT NOT NULL,
     "creator" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
@@ -192,9 +258,9 @@ CREATE TABLE "field_answer" (
 
 -- CreateTable
 CREATE TABLE "field_option" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "fieldId" TEXT NOT NULL,
+    "fieldId" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "creator" TEXT NOT NULL,
@@ -207,13 +273,13 @@ CREATE TABLE "field_option" (
 
 -- CreateTable
 CREATE TABLE "encounter" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "encounterTypeId" TEXT NOT NULL,
-    "patientId" TEXT NOT NULL,
-    "locationId" TEXT NOT NULL,
-    "formId" TEXT NOT NULL,
-    "providerId" TEXT NOT NULL,
+    "encounterTypeId" UUID NOT NULL,
+    "patientId" UUID NOT NULL,
+    "locationId" UUID NOT NULL,
+    "formId" UUID NOT NULL,
+    "providerId" UUID NOT NULL,
     "startDatetime" TIMESTAMP(3) NOT NULL,
     "endDatetime" TIMESTAMP(3) NOT NULL,
     "voided" BOOLEAN NOT NULL DEFAULT false,
@@ -230,7 +296,7 @@ CREATE TABLE "encounter" (
 
 -- CreateTable
 CREATE TABLE "encounter_type" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -244,10 +310,10 @@ CREATE TABLE "encounter_type" (
 
 -- CreateTable
 CREATE TABLE "obs" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
-    "encounterId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
+    "encounterId" UUID NOT NULL,
     "obsDatetime" TIMESTAMP(3) NOT NULL,
     "valueDatetime" TIMESTAMP(3) NOT NULL,
     "valueNumeric" DOUBLE PRECISION NOT NULL,
@@ -262,10 +328,10 @@ CREATE TABLE "obs" (
 
 -- CreateTable
 CREATE TABLE "order" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
-    "encounterId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
+    "encounterId" UUID NOT NULL,
     "orderDatetime" TIMESTAMP(3) NOT NULL,
     "instructions" TEXT NOT NULL,
     "dosage" TEXT NOT NULL,
@@ -279,17 +345,17 @@ CREATE TABLE "order" (
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
     "lastChangedDate" TIMESTAMP(3) NOT NULL,
-    "orderFrequencyId" TEXT,
-    "orderRouteId" TEXT,
-    "orderTypeId" TEXT,
-    "orderUnitId" TEXT,
+    "orderFrequencyId" UUID,
+    "orderRouteId" UUID,
+    "orderTypeId" UUID,
+    "orderUnitId" UUID,
 
     CONSTRAINT "order_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "order_frequency" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -303,7 +369,7 @@ CREATE TABLE "order_frequency" (
 
 -- CreateTable
 CREATE TABLE "order_route" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -317,7 +383,7 @@ CREATE TABLE "order_route" (
 
 -- CreateTable
 CREATE TABLE "order_type" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -331,7 +397,7 @@ CREATE TABLE "order_type" (
 
 -- CreateTable
 CREATE TABLE "order_unit" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -345,7 +411,7 @@ CREATE TABLE "order_unit" (
 
 -- CreateTable
 CREATE TABLE "concept" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -359,21 +425,21 @@ CREATE TABLE "concept" (
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
     "lastChangedDate" TIMESTAMP(3) NOT NULL,
-    "conceptClassId" TEXT,
-    "conceptDatatypeId" TEXT,
-    "conceptMapId" TEXT,
-    "conceptSetId" TEXT,
-    "conceptSourceId" TEXT,
+    "conceptClassId" UUID,
+    "conceptDatatypeId" UUID,
+    "conceptMapId" UUID,
+    "conceptSetId" UUID,
+    "conceptSourceId" UUID,
 
     CONSTRAINT "concept_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "concept_answer" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
-    "answerConceptId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
+    "answerConceptId" UUID NOT NULL,
     "creator" TEXT NOT NULL,
     "dateCreated" TIMESTAMP(3) NOT NULL,
     "lastChangedBy" TEXT NOT NULL,
@@ -384,7 +450,7 @@ CREATE TABLE "concept_answer" (
 
 -- CreateTable
 CREATE TABLE "concept_class" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -398,7 +464,7 @@ CREATE TABLE "concept_class" (
 
 -- CreateTable
 CREATE TABLE "concept_data_type" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -412,7 +478,7 @@ CREATE TABLE "concept_data_type" (
 
 -- CreateTable
 CREATE TABLE "concept_map" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -426,9 +492,9 @@ CREATE TABLE "concept_map" (
 
 -- CreateTable
 CREATE TABLE "concept_name" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "locale" TEXT NOT NULL,
     "creator" TEXT NOT NULL,
@@ -441,9 +507,9 @@ CREATE TABLE "concept_name" (
 
 -- CreateTable
 CREATE TABLE "concept_numeric" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
     "hiAbsolute" DOUBLE PRECISION NOT NULL,
     "hiCritical" DOUBLE PRECISION NOT NULL,
     "hiNormal" DOUBLE PRECISION NOT NULL,
@@ -461,9 +527,9 @@ CREATE TABLE "concept_numeric" (
 
 -- CreateTable
 CREATE TABLE "concept_proposal" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "creator" TEXT NOT NULL,
@@ -476,7 +542,7 @@ CREATE TABLE "concept_proposal" (
 
 -- CreateTable
 CREATE TABLE "concept_set" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -490,7 +556,7 @@ CREATE TABLE "concept_set" (
 
 -- CreateTable
 CREATE TABLE "concept_source" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -504,9 +570,9 @@ CREATE TABLE "concept_source" (
 
 -- CreateTable
 CREATE TABLE "concept_word" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
-    "conceptId" TEXT NOT NULL,
+    "conceptId" UUID NOT NULL,
     "word" TEXT NOT NULL,
     "locale" TEXT NOT NULL,
     "creator" TEXT NOT NULL,
@@ -519,7 +585,7 @@ CREATE TABLE "concept_word" (
 
 -- CreateTable
 CREATE TABLE "resource" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "uuid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -533,19 +599,19 @@ CREATE TABLE "resource" (
 
 -- CreateTable
 CREATE TABLE "blog_post" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "context" JSONB NOT NULL,
-    "authorId" TEXT NOT NULL,
-    "spaceTimeCoordinatesId" TEXT NOT NULL,
+    "authorId" UUID NOT NULL,
+    "spaceTimeCoordinatesId" UUID NOT NULL,
 
     CONSTRAINT "blog_post_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "blog_post_tag" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "descriptor" TEXT,
 
@@ -554,16 +620,16 @@ CREATE TABLE "blog_post_tag" (
 
 -- CreateTable
 CREATE TABLE "blog_post_tag_arrow" (
-    "id" TEXT NOT NULL,
-    "postId" TEXT NOT NULL,
-    "tagId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "postId" UUID NOT NULL,
+    "tagId" UUID NOT NULL,
 
     CONSTRAINT "blog_post_tag_arrow_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "blog_post_author" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
 
     CONSTRAINT "blog_post_author_pkey" PRIMARY KEY ("id")
@@ -571,7 +637,7 @@ CREATE TABLE "blog_post_author" (
 
 -- CreateTable
 CREATE TABLE "space_time_coordinates" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "latitude" DOUBLE PRECISION NOT NULL,
     "longitude" DOUBLE PRECISION NOT NULL,
     "startTime" DOUBLE PRECISION NOT NULL,
@@ -585,8 +651,8 @@ CREATE TABLE "space_time_coordinates" (
 
 -- CreateTable
 CREATE TABLE "BudgetEntry" (
-    "id" TEXT NOT NULL,
-    "serviceId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "serviceId" UUID NOT NULL,
     "cost" DOUBLE PRECISION NOT NULL,
     "discount" DOUBLE PRECISION NOT NULL,
     "promotion" DOUBLE PRECISION NOT NULL,
@@ -594,14 +660,14 @@ CREATE TABLE "BudgetEntry" (
     "percentChange" DOUBLE PRECISION NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "budgetId" TEXT NOT NULL,
+    "budgetId" UUID NOT NULL,
 
     CONSTRAINT "BudgetEntry_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Service" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "description" TEXT NOT NULL,
     "category" TEXT NOT NULL,
     "metadata" JSONB NOT NULL,
@@ -613,19 +679,19 @@ CREATE TABLE "Service" (
 
 -- CreateTable
 CREATE TABLE "Budget" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "fiscalYear" INTEGER NOT NULL,
-    "reportId" TEXT,
+    "reportId" UUID,
 
     CONSTRAINT "Budget_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Report" (
-    "id" TEXT NOT NULL,
-    "budgetId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "budgetId" UUID NOT NULL,
     "totalCost" DOUBLE PRECISION NOT NULL,
     "totalDiscount" DOUBLE PRECISION NOT NULL,
     "totalPromotion" DOUBLE PRECISION NOT NULL,
@@ -638,7 +704,7 @@ CREATE TABLE "Report" (
 
 -- CreateTable
 CREATE TABLE "BudgetUser" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
@@ -650,27 +716,40 @@ CREATE TABLE "BudgetUser" (
 
 -- CreateTable
 CREATE TABLE "BudgetBudgetUser" (
-    "userId" TEXT NOT NULL,
-    "budgetId" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+    "userId" UUID NOT NULL,
+    "budgetId" UUID NOT NULL,
     "role" TEXT NOT NULL,
     "ability" TEXT NOT NULL,
     "category" TEXT NOT NULL,
 
-    CONSTRAINT "BudgetBudgetUser_pkey" PRIMARY KEY ("userId","budgetId")
+    CONSTRAINT "BudgetBudgetUser_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "BudEvent" (
-    "id" TEXT NOT NULL,
+    "id" UUID NOT NULL DEFAULT gen_random_uuid(),
     "type" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "categoryList" TEXT[],
     "metadata" JSONB NOT NULL,
-    "budUserId" TEXT NOT NULL,
+    "budUserId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "BudEvent_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_username_key" ON "users"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "sessions_sessionToken_key" ON "sessions"("sessionToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "authenticator_credentialID_key" ON "authenticator"("credentialID");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "appointment_uuid_key" ON "appointment"("uuid");
@@ -782,6 +861,18 @@ CREATE UNIQUE INDEX "Report_budgetId_key" ON "Report"("budgetId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "BudgetUser_email_key" ON "BudgetUser"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "BudgetBudgetUser_userId_budgetId_key" ON "BudgetBudgetUser"("userId", "budgetId");
+
+-- AddForeignKey
+ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "authenticator" ADD CONSTRAINT "authenticator_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "appointment" ADD CONSTRAINT "appointment_appointmentTypeId_fkey" FOREIGN KEY ("appointmentTypeId") REFERENCES "appointment_type"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
