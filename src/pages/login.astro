@@ -10,7 +10,7 @@ const { workflow, call_to_action } = homepage.data;
 ---
 
 <Base>
-  <div class="flex flex-row ml-36">
+  <div class="flex flex-col-reverse md:flex-row items-center md:ml-36">
     <section class="w-1/2">
       <Cta cta={call_to_action} />
     </section>
@@ -25,7 +25,7 @@ const { workflow, call_to_action } = homepage.data;
     </section>
   </div>
   <!-- Workflow -->
-  <section class="section -mt-32 pb-0">
+  <section class="section -mt-10 pb-0">
     <div class="mb-8 text-center">
       <h2
         class="mx-auto max-w-[400px] font-bold leading-[44px]"

@@ -77,14 +77,14 @@ services:
 
 # workflow
 workflow: 
-  title: "Experience the best workflow with us"
+  title: "The B.O.S.S Workflow"
   image: "/images/banner.png"
   description: ""
 
 # call_to_action
 call_to_action:
-  title: Ready to get started?
-  content: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur.
+  title: Ready to start?
+  content: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
   image: '/images/cta.png'
   button:
     enable: true
