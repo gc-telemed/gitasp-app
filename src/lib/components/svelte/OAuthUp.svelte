@@ -36,14 +36,14 @@
           <!-- Form Group -->
           <div>
             <label
-              for="email"
+              for="email2"
               class="block float-left text-sm mb-2 text-primary dark:text-white"
               >Email address</label
             >
             <div class="relative">
               <input
                 type="email"
-                id="email"
+                id="email2"
                 name="email"
                 class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary focus:ring-primary disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 required
@@ -75,14 +75,14 @@
           <!-- Form Group -->
           <div>
             <div class="flex justify-between items-center">
-              <label for="password" class="block text-sm mb-2 text-primary dark:text-white"
+              <label for="password22" class="block text-sm mb-2 text-primary dark:text-white"
                 >Password</label
               >
             </div>
             <div class="relative">
               <input
                 type="password"
-                id="password"
+                id="password22"
                 name="password"
                 class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-primary focus:ring-primary disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 required

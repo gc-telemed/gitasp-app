@@ -9,10 +9,10 @@ import { markdownify } from "@/lib/utils/textConverter";
 const { footer_content, copyright } = config.params;
 ---
 
-<footer class="section bg-theme-light pb-0">
-  <div class="container">
+<footer class="section md:px-96 bg-theme-light place-content-center">
+  <div class="container ml-12 place-self-center  align-middle">
     {/* footer menu */}
-    <div class="row">
+    <div class="flex flex-wrap place-content-center justify-center place-self-center">
       {
         menu.footer.map((col) => {
           return (
@@ -33,7 +33,7 @@ const { footer_content, copyright } = config.params;
       }
       {/* social icons */}
       <div class="md-12 sm:col-6 lg:col-3">
-        <a href="/" aria-label="Bigspring">
+        <a href="/" aria-label="Gita S P App">
           <Image
             src={config.site.logo}
             width={Number(config.site.logo_width)}

@@ -1,1 +1,10 @@
-<p>Just wanted to say HI from the clinic</p>
+---
+const user = Astro.locals.user;
+if (!user) {
+	return Astro.redirect("/login");
+}
+
+const username = user.username;
+---
+
+<p>Just wanted to say HI from {username}</p>
