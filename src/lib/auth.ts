@@ -2,8 +2,9 @@ import { GitHub } from "arctic";
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma"
 import { PrismaClient } from "@prisma/client"
 import { Lucia } from "lucia";
+import { withOptimize } from "@prisma/extension-optimize";
 
-export const prisma = new PrismaClient()
+export const prisma = new PrismaClient().$extends(withOptimize());
 
 export const adapter = new PrismaAdapter(prisma.session, prisma.user);
 

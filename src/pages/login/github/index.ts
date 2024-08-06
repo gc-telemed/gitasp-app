@@ -1,4 +1,3 @@
-// pages/login/github/index.ts
 import { generateState } from "arctic";
 import { github } from "../../../lib/auth";
 

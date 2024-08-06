@@ -1,6 +1,5 @@
-import { github, lucia, prisma } from "../../../lib/auth";
 import { OAuth2RequestError } from "arctic";
-import { generateIdFromEntropySize } from "lucia";
+import { github, lucia, prisma } from "../../../lib/auth";
 
 import type { APIContext } from "astro";
 
@@ -23,7 +22,6 @@ export async function GET(context: APIContext): Promise<Response> {
 		});
 		const githubUser: GitHubUser = await githubUserResponse.json();
 
-		// Replace this with your own DB client.
 		const existingUser = await prisma.user.findFirst({
       where: {
         accounts: {
@@ -41,8 +39,8 @@ export async function GET(context: APIContext): Promise<Response> {
 			context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 			return context.redirect("/");
 		}
-		// Replace this with your own DB client.
-		await prisma.user.create({
+
+		const created = await prisma.user.create({
       data: {
         username: githubUser.login,
         accounts: {
@@ -52,10 +50,13 @@ export async function GET(context: APIContext): Promise<Response> {
             providerAccountId: githubUser.id
           }]
         }
+      },
+      select: {
+        id: true
       }
 		});
 
-		const session = await lucia.createSession(userId, {});
+		const session = await lucia.createSession(created.id, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);
 		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 		return context.redirect("/");
