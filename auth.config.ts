@@ -10,16 +10,15 @@ export const client = new PrismaClient();
 export default defineConfig({
   providers: [
     Credentials({
-      // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-      // e.g. domain, username, password, 2FA token, etc.
+      name: 'Credentials',
       credentials: {
-        username: {},
-        password: {},
+        username: { label: "Username", type: "text"},
+        password: { label: "Password", type: "password"},
       },
       authorize: async (credentials) => {
 
         // logic to salt and hash password
-        const pwHash = await hash(password, {
+        const pwHash = await hash(String(credentials.password), {
           // recommended minimum parameters
           memoryCost: 19456,
           timeCost: 2,
@@ -30,7 +29,7 @@ export default defineConfig({
         // logic to verify if the user exists
         const user = await client.user.findUniqueOrThrow({
           where: {
-            username: credentials.username,
+            username: String(credentials.username),
             password: pwHash
           }
         });
