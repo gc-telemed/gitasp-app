@@ -1,6 +1,6 @@
 export const prerender = false;
 
-import { client, lucia } from "$lib/db/auth"
+import { client } from "$lib/db/auth"
 import { verify } from "@node-rs/argon2";
 
 import type { APIContext } from "astro";
@@ -62,10 +62,6 @@ export async function POST(context: APIContext): Promise<Response> {
 			status: 400
 		});
 	}
-
-	const session = await lucia.createSession(existingUser.id, {});
-	const sessionCookie = lucia.createSessionCookie(session.id);
-	context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
 	return context.redirect("/cliniq");
 }

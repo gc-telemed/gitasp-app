@@ -19,8 +19,8 @@
 
   "nav_button": {
     "enable": true,
-    "label": "Log In",
-    "link": "/dashboard"
+    "label": "Login / Join",
+    "link": "/login"
   },
 
   "params": {

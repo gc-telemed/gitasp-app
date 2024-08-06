@@ -7,8 +7,10 @@ import { defineConfig, squooshImageService } from "astro/config";
 import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
-
 import svelte from "@astrojs/svelte";
+import auth from "auth-astro";
+
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
@@ -28,7 +30,7 @@ export default defineConfig({
     }
   }), AutoImport({
     imports: ["@/shortcodes/Button", "@/shortcodes/Accordion", "@/shortcodes/Notice", "@/shortcodes/Video", "@/shortcodes/Youtube", "@/shortcodes/Tabs", "@/shortcodes/Tab"]
-  }), mdx(), svelte()],
+  }), mdx(), svelte(), auth()],
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, {
       test: "Table of contents"
@@ -38,5 +40,8 @@ export default defineConfig({
       wrap: true
     },
     extendDefaultPlugins: true
-  }
+  },
+  adapter: node({
+    mode: "standalone"
+  })
 });

@@ -19,6 +19,10 @@ export interface NavigationLink {
 }
 
 const { main }: { main: NavigationLink[] } = menu;
+
+function isNotLoginPage() {
+  return pathname !== "/login";
+}
 ---
 
 <header class="header">
@@ -98,9 +102,30 @@ const { main }: { main: NavigationLink[] } = menu;
           </>
         ))
       }
+      {
+        nav_button.enable && (
+          <div class="block md:hidden">
+            <a
+              class="btn btn-primary z-0 ml-auto py-[14px]"
+              href={nav_button.link}
+            >
+              {nav_button.label}
+            </a>
+          </div>
+        )
+      }
     </ul>
     {
-      nav_button.enable && <SignIn />
+      nav_button.enable && (
+        <div class="order-1 ml-auto hidden items-center md:order-2 md:ml-0 md:flex md:min-w-[150px] lg:min-w-[200px]">
+          <a
+            class="btn btn-primary z-0 ml-auto py-[14px]"
+            href={nav_button.link}
+          >
+            {nav_button.label}
+          </a>
+        </div>
+      )
     }
   </nav>
 </header>

@@ -1,9 +1,10 @@
 export const prerender = false;
 
+import { client } from "@/lib/db/auth";
 // pages/api/signup.ts
-import { client, lucia } from "$lib/db/auth";
+
 import { hash } from "@node-rs/argon2";
-import { generateIdFromEntropySize } from "lucia";
+
 
 import type { APIContext } from "astro";
 
@@ -29,7 +30,6 @@ export async function POST(context: APIContext): Promise<Response> {
 		});
 	}
 
-	const userId = generateIdFromEntropySize(10); // 16 characters long
 	const passwordHash = await hash(password, {
 		// recommended minimum parameters
 		memoryCost: 19456,
@@ -57,16 +57,11 @@ export async function POST(context: APIContext): Promise<Response> {
   } else {
     await client.user.create({
       data: {
-        id: userId,
         username,
         password: passwordHash
       }
     });
   }
-
-	const session = await lucia.createSession(userId, {});
-	const sessionCookie = lucia.createSessionCookie(session.id);
-	context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
 	return context.redirect("/cliniq");
 }

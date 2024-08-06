@@ -92,7 +92,7 @@ async function signUp(e: SubmitEvent) {
       <div class="p-4 overflow-y-auto">
         <label
           for="input-user"
-          class="block text-sm font-medium mb-2 dark:text-white"
+          class="block float-left text-md font-medium mb-2 dark:text-white"
           >Email/Username</label
         >
         <input
@@ -108,7 +108,7 @@ async function signUp(e: SubmitEvent) {
       <div class="pb-2 px-4 overflow-y-auto">
         <label
           for="input-pass"
-          class="block text-sm font-medium mb-2 dark:text-white"
+          class="block float-left text-md font-medium mb-2 dark:text-white"
           >Password</label
         >
         <input
@@ -154,7 +154,7 @@ async function signUp(e: SubmitEvent) {
       <div class="p-4 overflow-y-auto">
         <label
           for="input-username"
-          class="block text-sm font-medium mb-2 dark:text-white"
+          class="block float-left text-md font-medium mb-2 dark:text-white"
           >Email/Username</label
         >
         <input
@@ -170,7 +170,7 @@ async function signUp(e: SubmitEvent) {
       <div class="pb-2 px-4 overflow-y-auto">
         <label
           for="input-password"
-          class="block text-sm font-medium mb-2 dark:text-white"
+          class="block float-left text-md font-medium mb-2 dark:text-white"
           >Password</label
         >
         <input
@@ -185,7 +185,7 @@ async function signUp(e: SubmitEvent) {
       <div class="pb-2 px-4 overflow-y-auto">
         <label
           for="input-pass2"
-          class="block text-sm font-medium mb-2 dark:text-white"
+          class="block float-left text-md font-medium mb-2 dark:text-white"
           >Verify Password</label
         >
         <input
