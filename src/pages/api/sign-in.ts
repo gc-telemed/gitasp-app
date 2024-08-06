@@ -1,3 +1,5 @@
+export const prerender = false;
+
 import { client, lucia } from "$lib/db/auth"
 import { verify } from "@node-rs/argon2";
 

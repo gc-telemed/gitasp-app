@@ -1,3 +1,5 @@
+export const prerender = false;
+
 // pages/api/signup.ts
 import { client, lucia } from "$lib/db/auth";
 import { hash } from "@node-rs/argon2";
@@ -46,8 +48,11 @@ export async function POST(context: APIContext): Promise<Response> {
   });
 
   if (foundUser) {
-    return new Response("User already exists", {
-      status: 400
+    return new Response(JSON.stringify({ message: "User already exists" }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
   } else {
     await client.user.create({
