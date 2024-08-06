@@ -10,7 +10,7 @@ banner:
 
 # feature
 feature: 
-  title: Create a free account to access our premium services
+  title: Create a free account to access our premium services*
   features:
   - name: "Clean Code"
     icon: "/images/code.svg"
@@ -84,7 +84,7 @@ workflow:
 # call_to_action
 call_to_action:
   title: Ready to start?
-  content: If you have questions, let's find the answers together.
+  content: Got questions? Let's get in touch for the answers.
   image: '/images/cta.png'
   button:
     enable: true
