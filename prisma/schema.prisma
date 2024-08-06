@@ -23,22 +23,91 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+///AuthJS
 model User {
-  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  username String @unique
+  username String  @unique
+  name     String?
+
   password String
 
-  sessions Session[]
+  email         String?   @unique
+  emailVerified DateTime?
+
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  // Optional for WebAuthn support
+  Authenticator Authenticator[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId    String   @db.Uuid
-  expiresAt DateTime
+  sessionToken String   @unique
+  userId       String
+  expiresAt    DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("sessions")
 }
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verificationtokens")
+}
+
+// Optional for WebAuthn support
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
+  @@map("authenticator")
+}
+
+///AuthJS
 
 model Appointment {
   id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -187,8 +256,8 @@ model FormEncounter {
 model FormResource {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  formId          String    @db.Uuid
-  resourceId      String    @db.Uuid
+  formId          String   @db.Uuid
+  resourceId      String   @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -202,8 +271,8 @@ model FormResource {
 model FormSubmission {
   id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String        @unique
-  formId          String      @db.Uuid
-  encounterId     String      @db.Uuid
+  formId          String        @db.Uuid
+  encounterId     String        @db.Uuid
   submissionDate  DateTime
   creator         String
   dateCreated     DateTime
@@ -222,7 +291,7 @@ model Field {
   name            String
   description     String
   fieldType       String
-  conceptId       String      @db.Uuid
+  conceptId       String        @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -238,8 +307,8 @@ model Field {
 model FieldAnswer {
   id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid             String         @unique
-  formSubmissionId String     @db.Uuid
-  fieldId          String     @db.Uuid
+  formSubmissionId String         @db.Uuid
+  fieldId          String         @db.Uuid
   value            String
   creator          String
   dateCreated      DateTime
@@ -254,7 +323,7 @@ model FieldAnswer {
 model FieldOption {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  fieldId         String    @db.Uuid
+  fieldId         String   @db.Uuid
   name            String
   description     String
   creator         String
@@ -269,11 +338,11 @@ model FieldOption {
 model Encounter {
   id                 String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid               String           @unique
-  encounterTypeId    String     @db.Uuid
-  patientId          String     @db.Uuid
-  locationId         String     @db.Uuid
-  formId             String     @db.Uuid
-  providerId         String     @db.Uuid
+  encounterTypeId    String           @db.Uuid
+  patientId          String           @db.Uuid
+  locationId         String           @db.Uuid
+  formId             String           @db.Uuid
+  providerId         String           @db.Uuid
   startDatetime      DateTime
   endDatetime        DateTime
   voided             Boolean          @default(false)
@@ -333,8 +402,8 @@ model Obs {
 model Order {
   id               String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid             String          @unique
-  conceptId        String           @db.Uuid
-  encounterId      String           @db.Uuid
+  conceptId        String          @db.Uuid
+  encounterId      String          @db.Uuid
   orderDatetime    DateTime
   instructions     String
   dosage           String
@@ -348,10 +417,10 @@ model Order {
   dateCreated      DateTime
   lastChangedBy    String
   lastChangedDate  DateTime
-  orderFrequencyId String?      @db.Uuid
-  orderRouteId     String?      @db.Uuid
-  orderTypeId      String?      @db.Uuid
-  orderUnitId      String?      @db.Uuid
+  orderFrequencyId String?         @db.Uuid
+  orderRouteId     String?         @db.Uuid
+  orderTypeId      String?         @db.Uuid
+  orderUnitId      String?         @db.Uuid
   concept          Concept         @relation(fields: [conceptId], references: [id])
   encounter        Encounter       @relation(fields: [encounterId], references: [id])
   OrderFrequency   OrderFrequency? @relation(fields: [orderFrequencyId], references: [id])
@@ -433,11 +502,11 @@ model Concept {
   dateCreated         DateTime
   lastChangedBy       String
   lastChangedDate     DateTime
-  conceptClassId      String?   @db.Uuid
-  conceptDatatypeId   String?   @db.Uuid
-  conceptMapId        String?   @db.Uuid
-  conceptSetId        String?   @db.Uuid
-  conceptSourceId     String?   @db.Uuid
+  conceptClassId      String?           @db.Uuid
+  conceptDatatypeId   String?           @db.Uuid
+  conceptMapId        String?           @db.Uuid
+  conceptSetId        String?           @db.Uuid
+  conceptSourceId     String?           @db.Uuid
   ConceptClass        ConceptClass?     @relation(fields: [conceptClassId], references: [id])
   ConceptDatatype     ConceptDatatype?  @relation(fields: [conceptDatatypeId], references: [id])
   conceptMap          ConceptMap?       @relation(fields: [conceptMapId], references: [id])
@@ -459,8 +528,8 @@ model Concept {
 model ConceptAnswer {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String    @db.Uuid
-  answerConceptId String    @db.Uuid
+  conceptId       String   @db.Uuid
+  answerConceptId String   @db.Uuid
   creator         String
   dateCreated     DateTime
   lastChangedBy   String
@@ -516,7 +585,7 @@ model ConceptMap {
 model ConceptName {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String    @db.Uuid
+  conceptId       String   @db.Uuid
   name            String
   locale          String
   creator         String
@@ -531,7 +600,7 @@ model ConceptName {
 model ConceptNumeric {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String    @db.Uuid
+  conceptId       String   @db.Uuid
   hiAbsolute      Float
   hiCritical      Float
   hiNormal        Float
@@ -551,7 +620,7 @@ model ConceptNumeric {
 model ConceptProposal {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String    @db.Uuid
+  conceptId       String   @db.Uuid
   name            String
   description     String
   creator         String
@@ -594,7 +663,7 @@ model ConceptSource {
 model ConceptWord {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   uuid            String   @unique
-  conceptId       String    @db.Uuid
+  conceptId       String   @db.Uuid
   word            String
   locale          String
   creator         String
@@ -625,8 +694,8 @@ model BlogPost {
   title                  String
   content                String
   context                Json
-  authorId               String     @db.Uuid
-  spaceTimeCoordinatesId String     @db.Uuid          @unique
+  authorId               String               @db.Uuid
+  spaceTimeCoordinatesId String               @unique @db.Uuid
   author                 BlogPostAuthor       @relation(fields: [authorId], references: [id])
   spaceTimeCoordinates   SpaceTimeCoordinates @relation(fields: [spaceTimeCoordinatesId], references: [id])
   tagArrowList           BlogPostTagArrow[]
@@ -645,8 +714,8 @@ model BlogPostTag {
 
 model BlogPostTagArrow {
   id     String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  postId String     @db.Uuid
-  tagId  String     @db.Uuid
+  postId String      @db.Uuid
+  tagId  String      @db.Uuid
   post   BlogPost    @relation(fields: [postId], references: [id])
   tag    BlogPostTag @relation(fields: [tagId], references: [id])
 
@@ -678,7 +747,7 @@ model SpaceTimeCoordinates {
 
 model BudgetEntry {
   id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  serviceId     String  @db.Uuid
+  serviceId     String   @db.Uuid
   cost          Float
   discount      Float
   promotion     Float
@@ -706,7 +775,7 @@ model Budget {
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
   fiscalYear Int
-  reportId   String?        @db.Uuid
+  reportId   String?         @db.Uuid
   userList   BudgetBudUser[]
   entryList  BudgetEntry[]
   report     Report?
@@ -738,9 +807,9 @@ model BudUser {
 }
 
 model BudgetBudUser {
-  id String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId   String   @db.Uuid
-  budgetId String   @db.Uuid
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId   String  @db.Uuid
+  budgetId String  @db.Uuid
   role     String
   ability  String
   category String

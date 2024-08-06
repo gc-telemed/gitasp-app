@@ -20,7 +20,7 @@
   "nav_button": {
     "enable": true,
     "label": "Login / Join",
-    "link": "/login"
+    "link": "/welcome"
   },
 
   "params": {

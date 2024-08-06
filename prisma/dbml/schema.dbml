@@ -2,18 +2,77 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Table User {
+Table users {
   id String [pk]
   username String [unique, not null]
   password String [not null]
-  sessions Session [not null]
+  name String
+  email String [unique]
+  emailVerified DateTime
+  image String
+  accounts accounts [not null]
+  sessions sessions [not null]
+  Authenticator authenticator [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+
+  Note: 'AuthJS'
 }
 
-Table Session {
-  id String [pk]
+Table accounts {
+  userId String [not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  user users [not null]
+
+  indexes {
+    (provider, providerAccountId) [pk]
+  }
+}
+
+Table sessions {
+  sessionToken String [unique, not null]
   userId String [not null]
   expiresAt DateTime [not null]
-  user User [not null]
+  user users [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table verificationtokens {
+  identifier String [not null]
+  token String [not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [pk]
+  }
+}
+
+Table authenticator {
+  credentialID String [unique, not null]
+  userId String [not null]
+  providerAccountId String [not null]
+  credentialPublicKey String [not null]
+  counter Int [not null]
+  credentialDeviceType String [not null]
+  credentialBackedUp Boolean [not null]
+  transports String
+  user users [not null]
+
+  indexes {
+    (userId, credentialID) [pk]
+  }
 }
 
 Table appointment {
@@ -669,7 +728,11 @@ Table BudEvent {
   budUser BudgetUser [not null]
 }
 
-Ref: Session.userId > User.id [delete: Cascade]
+Ref: accounts.userId > users.id [delete: Cascade]
+
+Ref: sessions.userId > users.id [delete: Cascade]
+
+Ref: authenticator.userId > users.id [delete: Cascade]
 
 Ref: appointment.appointmentTypeId > appointment_type.id
 
