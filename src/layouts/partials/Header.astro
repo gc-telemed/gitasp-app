@@ -98,18 +98,6 @@ const { main }: { main: NavigationLink[] } = menu;
           </>
         ))
       }
-      {
-        nav_button.enable && (
-          <div class="block md:hidden">
-            <a
-              class="btn btn-primary z-0 ml-auto py-[14px]"
-              href={nav_button.link}
-            >
-              {nav_button.label}
-            </a>
-          </div>
-        )
-      }
     </ul>
     {
       nav_button.enable && <SignIn />
