@@ -79,7 +79,7 @@ services:
 workflow: 
   title: "The B.O.S.S Workflows"
   image: "/images/banner.png"
-  description: " Process Optimization for Surgical & Medical Workflows"
+  description: " Process Optimization for Surgical & Medical Contexts"
 
 # call_to_action
 call_to_action:

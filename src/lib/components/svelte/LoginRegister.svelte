@@ -2,7 +2,6 @@
   import OAuthIn from "./OAuthIn.svelte";
   import OAuthUp from "./OAuthUp.svelte";
 
-
   let responseMessage: string;
 
   async function signInAction(e: SubmitEvent) {
