@@ -24,8 +24,8 @@ type DocsConfig = {
 };
 
 export const docsConfig: DocsConfig = {
-	sidebarPatientNav,
-	sidebarEmployeeNav
+	sidebarPatientNav: sidebarPatientNav,
+	sidebarEmployeeNav: sidebarEmployeeNav
 };
 
 type Example = {
