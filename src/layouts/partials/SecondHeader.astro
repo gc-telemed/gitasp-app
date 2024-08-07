@@ -71,39 +71,16 @@ import SearchBarDnD from "./SearchBarDnD.astro";
           class="py-2 md:py-0 flex flex-col md:flex-row md:items-center gap-0.5 md:gap-1"
         >
           <div class="grow">
-            <div class="float-left">
+            <div class="float-left h-12 mt-4   w-7/12">
               <SearchBarDnD />
             </div>
             <div
               class="flex flex-col md:flex-row md:justify-end md:items-center gap-0.5 md:gap-1"
             >
-              <a
-                class="p-2 flex items-center text-sm bg-gray-100 text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-neutral-700 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
-                href="#"
-                aria-current="page"
-              >
-                <svg
-                  class="shrink-0 size-4 me-3 md:me-2 block md:hidden"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  ><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"
-                  ></path><path
-                    d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
-                  ></path></svg
-                >
-                Landing
-              </a>
 
               <!-- Mega Menu -->
               <div
-                class="hs-dropdown [--strategy:static] md:[--strategy:absolute] [--adaptive:none] [--is-collapse:true] md:[--is-collapse:false]"
+                class="hs-dropdown mt-4 [--strategy:static] md:[--strategy:absolute] [--adaptive:none] [--is-collapse:true] md:[--is-collapse:false]"
               >
                 <button
                   id="hs-header-base-mega-menu-fullwidth"
@@ -439,7 +416,7 @@ import SearchBarDnD from "./SearchBarDnD.astro";
               <!-- End Mega Menu -->
 
               <a
-                class="p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                class="p-2 flex mt-4 items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 href="#"
               >
                 <svg
@@ -460,7 +437,7 @@ import SearchBarDnD from "./SearchBarDnD.astro";
               </a>
 
               <a
-                class="p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                class="p-2 flex mt-4 items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 href="#"
               >
                 <svg
@@ -487,7 +464,7 @@ import SearchBarDnD from "./SearchBarDnD.astro";
               </a>
 
               <a
-                class="p-2 flex items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+                class="p-2 flex mt-4 items-center text-sm text-gray-800 hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:text-neutral-200 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
                 href="#"
               >
                 <svg
@@ -521,22 +498,16 @@ import SearchBarDnD from "./SearchBarDnD.astro";
           <!-- Button Group -->
           <div class="flex flex-wrap items-center gap-x-1.5">
             <a
-              class="py-[7px] px-2.5 inline-flex items-center font-medium text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 focus:outline-none focus:bg-gray-100 dark:border-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+              class="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-primary text-white hover:bg-teal-800 focus:outline-none focus:bg-primary disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:bg-blue-600"
               href="#"
             >
-              Sign in
-            </a>
-            <a
-              class="py-2 px-2.5 inline-flex items-center font-medium text-sm rounded-lg bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:bg-blue-600"
-              href="#"
-            >
-              Get started
+              Lock Screen
             </a>
           </div>
           <!-- End Button Group -->
 
           <!-- Button Group -->
-          <div class="float-right">
+          <div class="float-right z-[80]">
             <RealtimeStreams/>
           </div>
           <!-- End Button Group -->
