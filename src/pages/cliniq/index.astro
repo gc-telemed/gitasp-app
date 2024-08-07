@@ -1,6 +1,7 @@
 ---
 export const prerender = false;
 import SecondBase from "@/layouts/SecondBase.astro"
+import DashboardMasonry from "$lib/components/astro/dashboard/DashboardMasonry.astro"
 
 // const user = Astro.locals.user;
 // if (!user) {
@@ -12,5 +13,5 @@ import SecondBase from "@/layouts/SecondBase.astro"
 const username = "Risi"
 ---
 <SecondBase>
-<p>Just wanted to say HI from {username}</p>
+<DashboardMasonry />
 </SecondBase>
