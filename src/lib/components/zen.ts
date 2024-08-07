@@ -1,6 +1,6 @@
 
 
-import { faArrowCircleUp, faAsterisk, faCalendarAlt, faClose, faContactBook, faCreditCard, faCreditCardAlt, faHeart, faIdBadge, faListNumeric, faMedkit, faMoneyBillTransfer, faMoneyBillTrendUp, faPassport, faPhoneAlt, faPlus, faPlusCircle, faPortrait, faReceipt, faStethoscope, faUserCircle, faUserDoctor, faUserGroup, faUserPen, faUtensils, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faArrowCircleUp, faAsterisk, faCalendarAlt, faClose, faContactBook, faCreditCard, faCreditCardAlt, faHeart, faIdBadge, faListNumeric, faMedkit, faMinusCircle, faMoneyBillTransfer, faMoneyBillTrendUp, faPassport, faPhoneAlt, faPlus, faPlusCircle, faPortrait, faReceipt, faStethoscope, faUserCircle, faUserDoctor, faUserGroup, faUserPen, faUtensils, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 export const sidebarPatientNav = [
   {
@@ -9,24 +9,24 @@ export const sidebarPatientNav = [
     icon: faWallet,
     items: [
       {
-        title: "Issue Request",
-        href: "/cliniq/card-issuance-request-list",
+        title: "Before Visits",
+        href: "/cliniq/before-visit-payments",
         icon: faReceipt,
       },
       {
-        title: "Request Review",
-        href: "/cliniq/card-application-review-list",
+        title: "Pending (Individual)",
+        href: "/cliniq/indie-pending-payments",
         icon: faIdBadge,
       },
       {
-        title: "Update Request",
-        href: "/cliniq/card-update-request-list",
+        title: "Pending (Hospital)",
+        href: "/cliniq/org-pending-payments",
         icon: faArrowCircleUp,
       },
       {
-        title: "Closing Request",
-        href: "/cliniq/card-closing-request-list",
-        icon: faClose,
+        title: "Discounted Visits",
+        href: "/cliniq/special-discount-payments",
+        icon: faMinusCircle,
       },
     ],
   },

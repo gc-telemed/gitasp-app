@@ -12,16 +12,17 @@ const { subItems } = Astro.props;
     subItems?.map((item) => {
       return (
         <li class="hs-accordion" id={item.title + "-accordion-sub-1"}>
-          <button
+          <a href={item.href}
             type="button"
-            class="hs-accordion-toggle hover:bg-gray-500 hover:underline hover:underline-offset-2 w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-xs text-gray-800 rounded-lg "
+            class="hs-accordion-toggle hover:bg-gray-200 hover:underline hover:underline-offset-2 w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-xs text-gray-800 rounded-lg "
             aria-expanded="true"
             aria-controls={item.title + "-accordion-sub-1-child"}
-          />
-          <div class="flex text-sm p-1 -mt-4 pb-2 align-baseline flex-row justify-around float-left ">
-            {item.icon && <Fa icon={item.icon} class="mr-2 h-5 w-5" />}
-            <span class="mt-0">{item.title}</span>
+          >
+          <div class="flex text-sm flex-row ">
+            {item.icon && <Fa icon={item.icon} class="mr-2 mt-2 h-5 w-5" />}
+            <span class="py-1">{item.title}</span>
           </div>
+          </a>
         </li>
       );
     })
