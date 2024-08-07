@@ -4,23 +4,20 @@ import LoginRegister from "@/lib/components/svelte/LoginRegister.svelte";
 import Base from "@/layouts/Base.astro";
 import Image from "astro/components/Image.astro";
 import { getEntryBySlug } from "astro:content";
+import FAQInline from "@/components/FAQInline.astro";
 
 const homepage = await getEntryBySlug("homepage", "index");
-const { workflow, call_to_action } = homepage.data;
+const { workflow } = homepage.data;
 ---
 
 <Base>
-  <div class="flex flex-col-reverse md:flex-row">
-    <section class="place-self-center p-0 md:ml-96 w-11/12">
-      <Cta cta={call_to_action} />
+  <div class="flex flex-col-reverse lg:flex-row">
+    <section class="m-0 p-0 md:ml-36 w-7/12 place-self-center">
+      <FAQInline />
     </section>
     <section class="w-5/6 mt-12 ml-12 z-50">
-      <div class="row text-center">
-        <div class="col-12 lg:col-8 ml-2">
-          <div class="flex flex-col justify-center">
-            <LoginRegister client:load/>
-          </div>
-        </div>
+        <div class="flex flex-col col-12 md:col-6  ml-2">
+             <LoginRegister client:load/>
       </div>
     </section>
   </div>

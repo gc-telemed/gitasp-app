@@ -1,10 +1,10 @@
 <script lang="ts">
   import github from "../../../images/github-mark.png";
 
-  const githubElement = document.querySelector("#github") as HTMLButtonElement;
-  githubElement.addEventListener("click", () => {
-    window.location.href = "/login/github";
-  })
+  // const githubElement = document.querySelector("#github") as HTMLButtonElement;
+  // githubElement.addEventListener("click", () => {
+  //   window.location.href = "/login/github";
+  // })
 </script>
 
 <div class="flex flex-row justify-between">

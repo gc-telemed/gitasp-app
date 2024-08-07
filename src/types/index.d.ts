@@ -44,10 +44,16 @@ export type TPostType = {
     draft: boolean;
     faqs: FaqItem[];
     description?: string;
-    call_to_action?: TCallToAction;
+    workflow?: TWorkflow;
     plans?: TPlan[];
   };
 };
+
+export type TWorkflow = {
+  title: string;
+  image: string;
+  description: string;
+}
 
 export type TPlan = {
   title: string;

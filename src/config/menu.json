@@ -15,14 +15,6 @@
     {
       "name": "Contact",
       "url": "/contact"
-    },
-    {
-      "name": "FAQ",
-      "url": "/faq"
-    },
-    {
-      "name": "Elements",
-      "url": "/elements"
     }
   ],
   "footer": [
@@ -35,7 +27,7 @@
         },
         {
           "text": "Quick Start",
-          "url": "#"
+          "url": "/welcome"
         }
       ]
     },
@@ -44,11 +36,11 @@
       "menu": [
         {
           "text": "Features",
-          "url": "#"
+          "url": "/"
         },
         {
           "text": "Platform",
-          "url": "#"
+          "url": "/welcome"
         },
         {
           "text": "Pricing",
@@ -61,7 +53,7 @@
       "menu": [
         {
           "text": "FAQ",
-          "url": "/faq"
+          "url": "/welcome"
         },
         {
           "text": "Privacy Policy",
