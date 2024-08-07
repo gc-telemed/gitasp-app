@@ -8,3 +8,7 @@ declare namespace App {
 		user: import("lucia").User | null;
 	}
 }
+
+declare module '@fortawesome/pro-solid-svg-icons/index.es' {
+  export * from '@fortawesome/pro-solid-svg-icons';
+}

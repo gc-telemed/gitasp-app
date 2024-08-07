@@ -1,4 +1,4 @@
-import type { ComponentType } from "svelte";
+import type { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { sidebarEmployeeNav, sidebarPatientNav } from "./zen";
 
 export type NavItem = {
@@ -6,7 +6,7 @@ export type NavItem = {
 	href?: string;
 	disabled?: boolean;
 	external?: boolean;
-	icon: ComponentType<any>; // Icon instead of any?
+	icon: IconDefinition; // Icon instead of any?
 	label?: string;
 };
 

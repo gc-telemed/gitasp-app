@@ -1,151 +1,142 @@
-import ContactRound from "lucide-svelte/icons/contact-round";
-import UsersRound from "lucide-svelte/icons/users-round";
-import UserPen from "lucide-svelte/icons/user-pen";
-import UserRoundPlus from "lucide-svelte/icons/user-round-plus";
-import UserRoundCog from "lucide-svelte/icons/user-round-cog";
-import WalletCards from "lucide-svelte/icons/wallet-cards";
-import CreditCard from "lucide-svelte/icons/credit-card";
-import SquareAsterisk from "lucide-svelte/icons/square-asterisk";
-import Asterisk from "lucide-svelte/icons/asterisk";
-import PackagePlus from "lucide-svelte/icons/package-plus";
-import BadgeHelp from "lucide-svelte/icons/badge-help";
-import AArrowUp from "lucide-svelte/icons/a-arrow-up";
-import CopyX from "lucide-svelte/icons/copy-x";
-import PhoneCall from "lucide-svelte/icons/phone-call";
+
+
+import { faArrowCircleUp, faAsterisk, faCalendarAlt, faClose, faContactBook, faCreditCard, faCreditCardAlt, faHeart, faIdBadge, faListNumeric, faMedkit, faMoneyBillTransfer, faMoneyBillTrendUp, faPassport, faPhoneAlt, faPlus, faPlusCircle, faPortrait, faReceipt, faStethoscope, faUserCircle, faUserDoctor, faUserGroup, faUserPen, faUtensils, faWallet } from "@fortawesome/free-solid-svg-icons";
 
 export const sidebarPatientNav = [
   {
-    title: "Patients",
-    href: "/cliniq/patient-list",
-    icon: ContactRound,
+    title: "Payments",
+    href: "/cliniq/payment-list",
+    icon: faWallet,
     items: [
       {
-        title: "Patient Accounts",
-        href: "/cliniq/patient-list",
-        icon: UserRoundPlus,
+        title: "Issue Request",
+        href: "/cliniq/card-issuance-request-list",
+        icon: faReceipt,
       },
       {
-        title: "Patient Details",
-        href: "/cliniq/patient-detail-list",
-        icon: UserPen,
+        title: "Request Review",
+        href: "/cliniq/card-application-review-list",
+        icon: faIdBadge,
       },
       {
-        title: "Organizations",
-        href: "/cliniq/patient-org-list",
-        icon: UsersRound,
+        title: "Update Request",
+        href: "/cliniq/card-update-request-list",
+        icon: faArrowCircleUp,
       },
       {
-        title: "Memberships",
-        href: "/cliniq/user-asset-list",
-        icon: UserRoundCog,
+        title: "Closing Request",
+        href: "/cliniq/card-closing-request-list",
+        icon: faClose,
       },
     ],
   },
   {
     title: "Appointments",
     href: "/cliniq/appointment-list",
-    icon: WalletCards,
+    icon: faCalendarAlt,
     items: [
       {
         title: "Clinic Visits",
         href: "/cliniq/clinic-appointment-list",
-        icon: CreditCard,
+        icon: faCreditCard,
       },
       {
         title: "Home Visits",
         href: "/cliniq/phone-appointment-list",
-        icon: SquareAsterisk,
+        icon: faAsterisk,
       },
       {
         title: "Telemed Calls",
         href: "/cliniq/card-limit-list",
-        icon: PhoneCall,
+        icon: faPhoneAlt,
       },
       {
         title: "Doctor Schedules",
         href: "/cliniq/card-limit-list",
-        icon: Asterisk,
+        icon: faCalendarAlt,
       },
     ],
   },
   {
-    title: "Payments",
-    href: "/cliniq/payment-list",
-    icon: WalletCards,
+    title: "Patients",
+    href: "/cliniq/patient-list",
+    icon: faContactBook,
     items: [
       {
-        title: "Issue Request",
-        href: "/cliniq/card-issuance-request-list",
-        icon: PackagePlus,
+        title: "Patient Accounts",
+        href: "/cliniq/patient-list",
+        icon: faUserDoctor,
       },
       {
-        title: "Request Review",
-        href: "/cliniq/card-application-review-list",
-        icon: BadgeHelp,
+        title: "Patient Details",
+        href: "/cliniq/patient-detail-list",
+        icon: faUserPen,
       },
       {
-        title: "Update Request",
-        href: "/cliniq/card-update-request-list",
-        icon: AArrowUp,
+        title: "Organizations",
+        href: "/cliniq/patient-org-list",
+        icon: faUserGroup,
       },
       {
-        title: "Closing Request",
-        href: "/cliniq/card-closing-request-list",
-        icon: CopyX,
+        title: "Memberships",
+        href: "/cliniq/user-asset-list",
+        icon: faUserCircle,
       },
     ],
   },
+
+
   {
-    title: "Packages",
-    href: "/cliniq/payment-list",
-    icon: WalletCards,
+    title: "Service Catalogs",
+    href: "/cliniq/catalogs",
+    icon: faPassport,
     items: [
       {
-        title: "Issue Request",
+        title: "Treatments",
         href: "/cliniq/card-issuance-request-list",
-        icon: PackagePlus,
+        icon: faStethoscope,
       },
       {
-        title: "Request Review",
+        title: "Surgeries",
         href: "/cliniq/card-application-review-list",
-        icon: BadgeHelp,
+        icon: faHeart,
       },
       {
-        title: "Update Request",
+        title: "Therapies",
         href: "/cliniq/card-update-request-list",
-        icon: AArrowUp,
+        icon: faArrowCircleUp,
       },
       {
-        title: "Closing Request",
+        title: "Medications",
         href: "/cliniq/card-closing-request-list",
-        icon: CopyX,
+        icon: faMedkit,
       },
     ],
   },
   {
     title: "Equipments",
     href: "/cliniq/payment-list",
-    icon: WalletCards,
+    icon: faUtensils,
     items: [
       {
         title: "Issue Request",
         href: "/cliniq/card-issuance-request-list",
-        icon: PackagePlus,
+        icon: faPlus,
       },
       {
         title: "Request Review",
         href: "/cliniq/card-application-review-list",
-        icon: BadgeHelp,
+        icon: faPlusCircle,
       },
       {
         title: "Update Request",
         href: "/cliniq/card-update-request-list",
-        icon: AArrowUp,
+        icon: faArrowCircleUp,
       },
       {
         title: "Closing Request",
         href: "/cliniq/card-closing-request-list",
-        icon: CopyX,
+        icon: faClose,
       },
     ],
   },
@@ -155,70 +146,154 @@ export const sidebarEmployeeNav = [
   {
     title: "User Accounts",
     href: "/cardman/user-list",
-    icon: ContactRound,
+    icon: faUserGroup,
     items: [
       {
         title: "Users",
         href: "/cardman/user-list",
-        icon: UserRoundPlus,
+        icon: faUserCircle,
         label: "All Users"
       },
       {
         title: "User Profiles",
         href: "/cardman/user-profile-list",
-        icon: UserPen,
+        icon: faPortrait,
       },
       {
         title: "User Groups",
         href: "/cardman/user-group-list",
-        icon: UsersRound,
+        icon: faUserCircle,
       },
       {
         title: "User Assets",
         href: "/cardman/user-asset-list",
-        icon: UserRoundCog,
+        icon: faUserPen,
       },
     ],
   },
   {
     title: "Cards & Keys",
     href: "/cardman/card-list",
-    icon: WalletCards,
+    icon: faCreditCardAlt,
     items: [
       {
         title: "Cards",
         href: "/cardman/card-list",
-        icon: CreditCard,
+        icon: faCreditCard,
       },
       {
         title: "Credit Scores",
         href: "/cardman/card-score-list",
-        icon: SquareAsterisk,
+        icon: faListNumeric,
       },
       {
         title: "Prepaid Limits",
         href: "/cardman/card-limit-list",
-        icon: Asterisk,
+        icon: faAsterisk,
       },
       {
         title: "Issue Request",
         href: "/cardman/card-issuance-request-list",
-        icon: PackagePlus,
+        icon: faPlus,
       },
       {
         title: "Request Review",
         href: "/cardman/card-application-review-list",
-        icon: BadgeHelp,
+        icon: faPlusCircle,
       },
       {
         title: "Update Request",
         href: "/cardman/card-update-request-list",
-        icon: AArrowUp,
+        icon: faArrowCircleUp,
       },
       {
         title: "Closing Request",
         href: "/cardman/card-closing-request-list",
-        icon: CopyX,
+        icon: faClose,
+      },
+    ],
+  },
+  {
+    title: "Expense Reports",
+    href: "/cardman/expense-list",
+    icon: faMoneyBillTransfer,
+    items: [
+      {
+        title: "Cards",
+        href: "/cardman/expense-list",
+        icon: faCreditCard,
+      },
+      {
+        title: "Credit Scores",
+        href: "/cardman/expense-score-list",
+        icon: faListNumeric,
+      },
+      {
+        title: "Monthly Limits",
+        href: "/cardman/expense-limit-list",
+        icon: faAsterisk,
+      },
+      {
+        title: "Issue Request",
+        href: "/cardman/expense-issuance-request-list",
+        icon: faPlus,
+      },
+      {
+        title: "Request Review",
+        href: "/cardman/expense-application-review-list",
+        icon: faPlusCircle,
+      },
+      {
+        title: "Update Request",
+        href: "/cardman/expense-update-request-list",
+        icon: faArrowCircleUp,
+      },
+      {
+        title: "Closing Request",
+        href: "/cardman/expense-closing-request-list",
+        icon: faClose,
+      },
+    ],
+  },
+  {
+    title: "Budget Proposals",
+    href: "/cardman/budget-list",
+    icon: faMoneyBillTrendUp,
+    items: [
+      {
+        title: "Cards",
+        href: "/cardman/budget-list",
+        icon: faCreditCard,
+      },
+      {
+        title: "Credit Scores",
+        href: "/cardman/budget-score-list",
+        icon: faListNumeric,
+      },
+      {
+        title: "Monthly Limits",
+        href: "/cardman/budget-limit-list",
+        icon: faAsterisk,
+      },
+      {
+        title: "Issue Request",
+        href: "/cardman/budget-issuance-request-list",
+        icon: faPlus,
+      },
+      {
+        title: "Request Review",
+        href: "/cardman/budget-application-review-list",
+        icon: faPlusCircle,
+      },
+      {
+        title: "Update Request",
+        href: "/cardman/budget-update-request-list",
+        icon: faArrowCircleUp,
+      },
+      {
+        title: "Closing Request",
+        href: "/cardman/budget-closing-request-list",
+        icon: faClose,
       },
     ],
   },
