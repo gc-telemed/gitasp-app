@@ -14,7 +14,7 @@ import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
-  site: config.site.base_url ? config.site.base_url : "http://examplesite.com",
+  site: config.site.base_url ? config.site.base_url : "http://gitasp.app",
   base: config.site.base_path ? config.site.base_path : "/",
   output: "hybrid",
   trailingSlash: config.site.trailing_slash ? "always" : "never",
