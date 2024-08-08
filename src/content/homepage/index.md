@@ -5,11 +5,11 @@ banner:
   image: /images/banner-gapl.png
   button:
     label: "Install Gita S P App"
-    link: "/install"
+    link: "/cliniq"
     enable: true
 
 # feature
-feature: 
+feature:
   title: Create a free account to access our premium services*
   features:
   - name: "Clean Code"
@@ -46,13 +46,13 @@ services:
 
   - title: "It is a privately owned Information and cyber security company"
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur. Leo facilisi nunc viverra tellus. Ac laoreet sit vel consquat. consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur. Leo facilisi nunc viverra tellus. Ac laoreet sit vel consquat."
-    images: 
+    images:
       - "/images/service-slide-1.png"
     button:
       enable: true
       label: Check it out
       link: /contact
-  
+
   - title: "It’s a team of experienced and skilled people with distributions"
     content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur. Leo facilisi nunc viverra tellus. Ac laoreet sit vel consquat. consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur. Leo facilisi nunc viverra tellus. Ac laoreet sit vel consquat."
     images:
@@ -76,7 +76,7 @@ services:
       link: /contact
 
 # workflow
-workflow: 
+workflow:
   title: "The B.O.S.S Workflows"
   image: "/images/banner.png"
   description: " Process Optimization for Surgical & Medical Contexts"

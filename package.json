@@ -42,6 +42,8 @@
     "fuse.js": "^7.0.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
+    "gridjs": "^6.2.0",
+    "gridjs-svelte": "^2.1.1",
     "lucia": "^3.2.0",
     "lucide-svelte": "^0.424.0",
     "marked": "^12.0.0",
