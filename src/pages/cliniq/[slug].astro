@@ -1,0 +1,16 @@
+---
+export const prerender = false;
+import SecondBase from "@/layouts/SecondBase.astro";
+import DataGrid from "$lib/components/svelte/datagrid/DataGrid.svelte";
+
+// const user = Astro.locals.user;
+// if (!user) {
+// 	return Astro.redirect("/login");
+// }
+
+// const username = user.username;
+---
+
+<SecondBase>
+  <DataGrid client:only="svelte" />
+</SecondBase>
